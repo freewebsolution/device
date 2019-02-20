@@ -1,0 +1,79 @@
+<pre>{{devices | json}}</pre>
+<div class="card bg-dark text-white mb-3">
+  <!--edit / add form-->
+  <form novalidate
+        (submit)="save(f)"
+        #f="ngForm"
+        class="card-body">
+ 
+    <input type="text"
+          [ngModel]="active?.label"
+           name="label"
+           required
+           class="form-control bg-dark text-white m-1"
+           placeholder="Phone model *">
+ 
+ 
+    <input type="number"
+           [ngModel]="active?.price"
+           name="price"
+           class="form-control bg-dark text-white m-1"
+           placeholder="Price *">
+ 
+    <select [ngModel]="active?.os"
+            name="os"
+            required
+            class="form-control bg-dark text-white m-1">
+      <option value="null">Select OS *</option>
+      <option value="Ios">Ios</option>
+      <option value="Android">Android</option>
+      <option value="Others">Others</option>
+    </select>
+ 
+ 
+    <div class="btn-group btn-group-sm m-1">
+      <button class="btn btn-warning"
+              type="submit"
+              [disabled]="f.invalid">
+        {{active?.id ? 'SAVE' : 'ADD'}}
+      </button>
+      <button
+          class="btn btn-light"
+          type="button"
+          *ngIf="active?.id"
+          (click)="reset()">
+        ADD NEW
+      </button>
+ 
+    </div>
+  </form>
+</div>
+<div class="bg-dark text-white mb-3">
+  <div *ngFor="let device of devices" class="list-group-item list-group-item-action" [ngClass]="{'bg-warning text-dark' : device.id === active?.id}" (click)="setActive(device)">
+
+    <!--os icon-->
+    <i style="margin-right: 5px;" class="fa" [ngClass]="{
+      'fa-android': device.os === 'Android',
+      'fa-apple': device.os === 'Ios',
+      'fa-tablet': device.os === 'Others'
+
+    }"></i>
+
+
+    <!--label-->
+    <i class="fa fa-in">{{device.label}}</i>
+    <span></span>
+
+    <!--display rate-->
+    <!--...missing...-->
+
+    <div class="pull-right">
+      <!--price -->
+      <strong *ngIf="device.price" [style.color] ="device.price > 400 ? 'red' : 'null'">
+        € {{device.price | number: '1.2-2'}}
+      </strong>
+      <!--trash icon-->
+      <i class="fa fa-trash icon" (click) = 'delete ($event, device)'></i>
+    </div>
+  </div>
+</div>
