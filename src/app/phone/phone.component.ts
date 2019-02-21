@@ -12,8 +12,12 @@ export class PhoneComponent implements OnInit {
   private url: string;
   devices: Device[];
   active: Device;
+  showloader: boolean;
+  showerrmsg: string;
 
-  constructor(private deviceservice: PhoneService) { }
+  constructor(private deviceservice: PhoneService) {
+    this.showloader = true;
+  }
 
   ngOnInit() {
     this.getAll();
@@ -21,7 +25,11 @@ export class PhoneComponent implements OnInit {
 
   getAll() {
     this.deviceservice.getAll()
-      .subscribe(dati => this.devices = dati);
+      .subscribe(dati => {
+        this.devices = dati;
+        this.showloader = false;
+      }, error => this.showerrmsg = error
+      );
   }
 
   delete(event: MouseEvent, device: Device) {
