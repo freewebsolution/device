@@ -14,6 +14,7 @@ export class PhoneComponent implements OnInit {
   private url: string;
   devices: Device[];
   active: Device;
+  showerrmsg: string;
 
   constructor(private deviceservice: PhoneService) { }
 
@@ -31,7 +32,10 @@ export class PhoneComponent implements OnInit {
 
   getAll() {
     this.deviceservice.getAll()
-      .subscribe(dati => this.devices = dati);
+      .subscribe(dati => {
+        this.devices = dati;
+      }, error => this.showerrmsg = error
+      );
   }
   add(device: Device) {
     this.deviceservice.postDevice(device)
@@ -53,16 +57,16 @@ export class PhoneComponent implements OnInit {
       }
       );
   }
-delete(event: MouseEvent, device: Device) {
-  event.stopPropagation();
-  this.deviceservice.deleteDevice(device)
-  .subscribe(
-    () => {
-      const id = this.devices.indexOf(device);
-      this.devices.splice(id, 1);
-    }
-  );
-}
+  delete(event: MouseEvent, device: Device) {
+    event.stopPropagation();
+    this.deviceservice.deleteDevice(device)
+      .subscribe(
+        () => {
+          const id = this.devices.indexOf(device);
+          this.devices.splice(id, 1);
+        }
+      );
+  }
   setActive(device: Device) {
     this.active = device;
   }
