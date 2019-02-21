@@ -9,7 +9,6 @@ import { PhoneService } from '../service/phone.service';
   styleUrls: ['./phone.component.scss']
 })
 export class PhoneComponent implements OnInit {
-  private url: string;
   devices: Device[];
   active: Device;
   showloader: boolean;
