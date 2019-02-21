@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Device } from '../model/device';
 import { PhoneService } from '../service/phone.service';
-import { NgForm } from '@angular/forms';
-
 
 
 @Component({
@@ -11,50 +9,26 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./phone.component.scss']
 })
 export class PhoneComponent implements OnInit {
-  private url: string;
   devices: Device[];
   active: Device;
+  showloader: boolean;
+
   showerrmsg: string;
 
-  constructor(private deviceservice: PhoneService) { }
+  constructor(private deviceservice: PhoneService) {
+    this.showloader = true;
+  }
 
   ngOnInit() {
     this.getAll();
-  }
-  save(form: NgForm) {
-    if (this.active.id) {
-      this.edit(form.value);
-    } else {
-      this.add(form.value);
-    }
-    form.reset();
   }
 
   getAll() {
     this.deviceservice.getAll()
       .subscribe(dati => {
         this.devices = dati;
+        this.showloader = false;
       }, error => this.showerrmsg = error
-      );
-  }
-  add(device: Device) {
-    this.deviceservice.postDevice(device)
-      .subscribe(dati => this.devices = dati);
-
-  }
-
-  edit(device: Device) {
-    const newDevice = Object.assign(
-      {},
-      this.active,
-      device
-    );
-    this.deviceservice.putDevice(newDevice)
-      .subscribe(dati => {
-        // tslint:disable-next-line:no-shadowed-variable
-        const id = this.devices.findIndex(device => device.id === newDevice.id);
-        this.devices[id] = newDevice;
-      }
       );
   }
   delete(event: MouseEvent, device: Device) {
@@ -66,12 +40,16 @@ export class PhoneComponent implements OnInit {
           this.devices.splice(id, 1);
         }
       );
+      }
+
+  okFormPadre(obj: Object) {
+    if (obj['action'] === 'add' || obj['action'] === 'update') {
+      this.getAll();
+    }
+
   }
   setActive(device: Device) {
     this.active = device;
-  }
-  reset() {
-    this.active = new Device();
   }
 
 

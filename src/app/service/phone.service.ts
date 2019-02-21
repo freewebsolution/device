@@ -24,16 +24,26 @@ export class PhoneService {
   }
   /*METODO AGGIUNTA DATI*/
   postDevice(device: Device): Observable<any> {
-    return this.http.post(url, device, { headers: this.option });
+    return this.http.post(url, device, { headers: this.option })
+    .pipe(
+      catchError(this.errorhandler)
+    );
   }
 
   /*METODO MODIFICA DATI*/
   putDevice(device: Device): Observable<any> {
-    return this.http.put(url + '?id=' + device.id, device, { headers: this.option });
+    return this.http.put(url + '?id=' + device.id, device, { headers: this.option })
+    .pipe(
+      catchError(this.errorhandler)
+    );
   }
   /*METODO CANCELLA DATI*/
   deleteDevice(device: Device): Observable<any> {
-    return this.http.delete(url + '?id=' + device.id);
+
+    return this.http.delete(url + '?id=' + device.id)
+    .pipe(
+      catchError(this.errorhandler)
+    );
   }
 
   /*GESTIONE ERRORI*/
@@ -49,8 +59,5 @@ export class PhoneService {
       return throwError(msg);
     }
     return throwError(`Si è verificato un errore di tipo: ${error.message}`);
-
   }
-
-
 }
