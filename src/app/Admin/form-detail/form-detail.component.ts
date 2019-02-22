@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-
 import { NgForm } from '@angular/forms';
 import { Device } from 'src/app/model/device';
 import { PhoneService } from 'src/app/service/phone.service';
