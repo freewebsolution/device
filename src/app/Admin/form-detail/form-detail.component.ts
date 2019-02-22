@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Device } from '../model/device';
-import { PhoneService } from '../service/phone.service';
+
 import { NgForm } from '@angular/forms';
+import { Device } from 'src/app/model/device';
+import { PhoneService } from 'src/app/service/phone.service';
 
 @Component({
   selector: 'app-form-detail',
