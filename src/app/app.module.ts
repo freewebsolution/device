@@ -10,6 +10,7 @@ import { NavComponent } from './nav/nav.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormDetailComponent } from './Admin/form-detail/form-detail.component';
 import { PhoneComponent } from './Admin/phone/phone.component';
+import { DashoboardComponent } from './Admin/dashoboard/dashoboard.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,7 +18,8 @@ import { PhoneComponent } from './Admin/phone/phone.component';
     FormDetailComponent,
     HomeComponent,
     LoginComponent,
-    NavComponent
+    NavComponent,
+    DashoboardComponent
   ],
   imports: [
     BrowserModule,

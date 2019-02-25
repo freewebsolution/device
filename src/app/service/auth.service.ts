@@ -2,19 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { catchError, map } from 'rxjs/operators';
-import { throwError } from 'rxjs';
-const url = 'http://localhost/phone_server/auth/';
+import { throwError, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private option: HttpHeaders = new HttpHeaders().set('Content-type', 'x-www-form-urlencoded');
+  url: string;
+  private option: HttpHeaders = new HttpHeaders().set('Content-type', 'application/x-www-form-urlencoded');
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.url = 'http://localhost/phone_server/auth/';
+   }
 
-   login(datiform) {
+   login(datiform): Observable<string> {
      const body = this.body(datiform);
-     return this.http.post(url, body, { headers: this.option })
+     return this.http.post(this.url, body, { headers: this.option})
      .pipe(
        map(res => {
          if (res['token']) {
@@ -27,9 +29,9 @@ export class AuthService {
 
   }
   private setSession (jwt: string) {
-    let expire: number = new Date().getTime() + 10000;
+    let expired: number = new Date().getTime() + 10000;
     localStorage.setItem('token', jwt);
-    localStorage.setItem('expire', expire.toString());
+    localStorage.setItem('expire', expired.toString());
   }
 
   logout() {
@@ -41,15 +43,16 @@ export class AuthService {
   private body(df: NgForm) {
    let param = new HttpParams()
     .set('username', df.value.username)
-    .set('username', df.value.username);
+    .set('password', df.value.password);
     return param;
   }
 
   notExpired(): boolean {
-    if (localStorage.getItem('scadenza')) {
-      let expire: number = parseInt(localStorage.getItem('scadenza'));
+    if (localStorage.getItem('expire')) {
+      let expire: number = parseInt(localStorage.getItem('expire'));
       return new Date().getTime() < expire;
     }
+    return false;
   }
 
 
