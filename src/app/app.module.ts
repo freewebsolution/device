@@ -11,6 +11,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormDetailComponent } from './Admin/form-detail/form-detail.component';
 import { PhoneComponent } from './Admin/phone/phone.component';
 import { DashoboardComponent } from './Admin/dashoboard/dashoboard.component';
+import { UserPhoneComponent } from './user-phone/user-phone.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +20,8 @@ import { DashoboardComponent } from './Admin/dashoboard/dashoboard.component';
     HomeComponent,
     LoginComponent,
     NavComponent,
-    DashoboardComponent
+    DashoboardComponent,
+    UserPhoneComponent
   ],
   imports: [
     BrowserModule,

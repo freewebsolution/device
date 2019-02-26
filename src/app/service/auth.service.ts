@@ -55,6 +55,13 @@ export class AuthService {
     return false;
   }
 
+  checkDir() {
+    if ( this.notExpired()) {
+      return 'dashboard';
+    }
+    return '';
+  }
+
 
   /*GESTIONE ERRORI*/
   errorhandler(error: any) {

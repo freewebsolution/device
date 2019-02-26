@@ -11,8 +11,7 @@ export class NavComponent implements OnInit {
   menu: Nav[];
   constructor(private auth: AuthService) {
     this.menu = [
-      {label: 'phone', url: 'phone'},
-      {label: 'dashboard', url: 'dashboard'}
+      {label: 'phone', url: '/phone'}
     ];
   }
 

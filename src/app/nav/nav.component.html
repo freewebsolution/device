@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" routerLink=''>Navbar</a>
+  <a class="navbar-brand" [routerLink]="this.auth.checkDir() +  '' ">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
     (click)="isCollapsed = !isCollapsed">
@@ -9,7 +9,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="!isCollapsed">
     <ul class="navbar-nav mr-auto">
       <li *ngFor='let nav of menu' class="nav-item">
-        <a class="nav-link" [routerLink]='nav.url' (click)="isCollapsed = !isCollapsed">{{nav.label | uppercase}}</a>
+        <a class="nav-link" [routerLink]='this.auth.checkDir() + nav.url' (click)="isCollapsed = !isCollapsed">{{nav.label | uppercase}}</a>
       </li>
       <div *ngIf="!this.auth. notExpired(); else logout">
         <li class="nav-item">
